@@ -9,4 +9,5 @@ setup(name='Flask-JSONSchema-Alt',
       author_email='rachekalmir@users.noreply.github.com',
       url='https://github.com/rachekalmir/flask_jsonschema_alt',
       packages=['flask_jsonschema_alt'],
+      requires=['sqlalchemy', 'flask']
       )
