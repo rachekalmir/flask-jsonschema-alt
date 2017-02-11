@@ -14,10 +14,10 @@ app.config.update(dict(
 ))
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'PUT'])
 @schema_json(Post)
 def root():
-    pass
+    return ""
 
 
 def init_db():
@@ -40,7 +40,7 @@ def get_db():
 
 
 @app.teardown_appcontext
-def close_db(error):
+def close_db(error=None):
     """Closes the database again at the end of the request."""
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
