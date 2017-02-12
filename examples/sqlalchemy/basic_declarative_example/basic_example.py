@@ -5,7 +5,7 @@ from flask import Flask, g
 from flask_jsonschema_alt import FlaskJsonSchemaAlt, schema_json
 from flask_jsonschema_alt.drivers import SqlAlchemyDriver
 
-from models import Base, Post, Session, create_engine
+from .models import Base, Post, Session, create_engine
 
 app = Flask(__name__)
 app.config.update(dict(

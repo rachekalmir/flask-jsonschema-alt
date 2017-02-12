@@ -1,5 +1,5 @@
 import os
-import basic_example
+from . import basic_example
 import unittest
 import tempfile
 
