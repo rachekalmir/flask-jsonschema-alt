@@ -1,15 +1,15 @@
 class BaseDriver(object):
-    @classmethod
-    def convert_entity_tree(cls, entity):
+    def __init__(self):
+        self._history = []
+
+    def convert_entity_tree(self, entity):
         """Convert the entity and relationships associated with this entity"""
         pass
 
-    @classmethod
-    def convert_entity(cls, entity):
+    def convert_entity(self, entity):
         """Convert an entity and return its' schema"""
         pass
 
-    @classmethod
-    def convert_field(cls, field):
+    def convert_field(self, field):
         """Convert a field and return its' property schema"""
         pass

@@ -14,7 +14,7 @@ def schema_json(database_entity):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            validate(request.get_json(), _fja.driver.convert_entity_tree(database_entity))
+            validate(request.get_json(), _fja.driver().convert_entity_tree(database_entity))
             return func(*args, **kwargs)
 
         return wrapper

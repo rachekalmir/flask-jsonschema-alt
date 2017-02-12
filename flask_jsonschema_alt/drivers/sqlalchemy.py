@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Boolean, String, Integer
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.inspection import inspect
+from sqlalchemy.util import symbol
 
 from .base_driver import BaseDriver
 
@@ -12,23 +13,30 @@ field_types = {
 
 
 class SqlAlchemyDriver(BaseDriver):
-    @classmethod
-    def convert_entity_tree(cls, entity: DeclarativeMeta):
-        schema = cls.convert_entity(entity)
+    def convert_entity_tree(self, entity: DeclarativeMeta, tree=None):
+        if tree is None:
+            tree = []
+
+        schema = self.convert_entity(entity)
         inspection = inspect(entity)
-        definitions = {}
+        self._history.append(inspection.mapper)
         for relationship in inspection.relationships:
-            pass
+            if relationship.mapper in self._history:
+                # Don't go over any entities twice
+                continue
+            if relationship.direction == symbol('MANTTOONE'):
+                schema[relationship.back_populates] = {'type': 'array', 'items': self.convert_entity_tree(relationship.mapper, tree + [])}
+            else:
+                schema[relationship.key] = {'type': 'object', 'items': self.convert_entity_tree(relationship.mapper)}
+
         return schema
 
-    @classmethod
-    def convert_entity(cls, entity: DeclarativeMeta):
+    def convert_entity(self, entity: DeclarativeMeta):
         schema = {'type': 'object', 'properties': {}}
         inspection = inspect(entity)
         for field in inspection.columns:
-            schema['properties'][field.name] = cls.convert_field(field)
+            schema['properties'][field.name] = self.convert_field(field)
         return schema
 
-    @classmethod
-    def convert_field(cls, field: Column):
+    def convert_field(self, field: Column):
         return {'type': field_types[type(field.type)]}

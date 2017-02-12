@@ -17,7 +17,8 @@ class BasicTestCase(unittest.TestCase):
         pass
 
     def test_post(self):
-        rv = self.app.post('/', data='{"post_value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}', content_type='application/json')
+        rv = self.app.post('/', data='{"post_value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "author": {"author_name": "John Doe"}}',
+                           content_type='application/json')
         assert b'' in rv.data and rv.status_code == 200
 
 
