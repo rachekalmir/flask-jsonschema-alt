@@ -1,1 +1,1 @@
-from .core import schema_json
+from .core import schema_json, FlaskJsonSchemaAlt

@@ -13,7 +13,7 @@ class BasicTestCase(unittest.TestCase):
             basic_example.init_db()
 
     def tearDown(self):
-        # basic_example.close_db()
+        # basic_declarative_example.close_db()
         pass
 
     def test_post(self):

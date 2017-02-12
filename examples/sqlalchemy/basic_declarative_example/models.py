@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Table, Integer, String, create_engine
+from sqlalchemy import ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
@@ -10,6 +11,7 @@ class Post(Base):
     __tablename__ = 'post'
     post_id = Column(Integer, primary_key=True)
     post_value = Column(String)
+    author_id = Column(Integer, ForeignKey('author.author_id'))
 
 
 class Author(Base):

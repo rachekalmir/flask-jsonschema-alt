@@ -1,7 +1,9 @@
 import sqlite3
 
 from flask import Flask, g
-from flask_jsonschema_alt import schema_json
+
+from flask_jsonschema_alt import FlaskJsonSchemaAlt, schema_json
+from flask_jsonschema_alt.drivers import SqlAlchemyDriver
 
 from models import Base, Post, Session, create_engine
 
@@ -12,6 +14,7 @@ app.config.update(dict(
     USERNAME='admin',
     PASSWORD='default'
 ))
+jsonschema = FlaskJsonSchemaAlt(app, SqlAlchemyDriver)
 
 
 @app.route('/', methods=['POST', 'PUT'])
