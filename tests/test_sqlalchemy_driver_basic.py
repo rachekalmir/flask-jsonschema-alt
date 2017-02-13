@@ -50,3 +50,22 @@ def test_sqlalchemy_recursive():
                               'post_value': {'type': 'string'}
                               }
            }
+
+
+def test_sqlalchemy_recursive_inverse():
+    assert sqlalchemy.SqlAlchemyDriver().convert_entity_tree(Author) == \
+           {
+               'posts': {'type': 'object',
+                         'items': {'type': 'object',
+                                   'properties': {'post_id': {'type': 'number'},
+                                                  'author_id': {'type': 'number'},
+                                                  'post_value': {'type': 'string'}
+                                                  }
+                                   }
+                         },
+               'type': 'object',
+               'properties': {'author_name': {'type': 'string'},
+                              'author_id': {'type': 'number'}
+
+                              }
+           }
