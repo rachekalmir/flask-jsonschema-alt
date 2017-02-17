@@ -5,7 +5,7 @@ from flask import Flask, g
 from flask_jsonschema_alt import FlaskJsonSchemaAlt, schema_json
 from flask_jsonschema_alt.drivers import SqlAlchemyDriver
 
-from .models import Base, Post, Session, create_engine
+from .models import Base, Post, Author, Session, create_engine
 
 app = Flask(__name__)
 app.config.update(dict(
@@ -17,9 +17,15 @@ app.config.update(dict(
 jsonschema = FlaskJsonSchemaAlt(app, SqlAlchemyDriver)
 
 
-@app.route('/', methods=['POST', 'PUT'])
+@app.route('/post', methods=['POST', 'PUT'])
 @schema_json(Post)
-def root():
+def post_root():
+    return ""
+
+
+@app.route('/author', methods=['POST', 'PUT'])
+@schema_json(Author)
+def author_root():
     return ""
 
 

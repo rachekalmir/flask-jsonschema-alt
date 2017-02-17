@@ -17,7 +17,13 @@ class BasicTestCase(unittest.TestCase):
         pass
 
     def test_post(self):
-        rv = self.app.post('/', data='{"post_value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "author": {"author_name": "John Doe"}}',
+        rv = self.app.post('/post', data='{"post_value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "author": {"author_name": "John Doe"}}',
+                           content_type='application/json')
+        assert b'' in rv.data and rv.status_code == 200
+
+    def test_author(self):
+        rv = self.app.post('/author', data='{"author_name": "John Doe", "posts": [{"post_value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },'
+                                     ' {"post_value": "Test Post"}]}',
                            content_type='application/json')
         assert b'' in rv.data and rv.status_code == 200
 

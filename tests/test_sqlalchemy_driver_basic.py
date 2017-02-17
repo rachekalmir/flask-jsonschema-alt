@@ -26,6 +26,7 @@ class Author(Base):
 def test_sqlalchemy_entity():
     assert sqlalchemy.SqlAlchemyDriver().convert_entity(Post) == \
            {
+               'additionalProperties': False,
                'properties': {'post_id': {'type': 'number'},
                               'author_id': {'type': 'number'},
                               'post_value': {'type': 'string'}
@@ -37,17 +38,17 @@ def test_sqlalchemy_entity():
 def test_sqlalchemy_recursive():
     assert sqlalchemy.SqlAlchemyDriver().convert_entity_tree(Post) == \
            {
-               'author': {'type': 'object',
-                          'items': {'type': 'object',
-                                    'properties': {'author_name': {'type': 'string'},
-                                                   'author_id': {'type': 'number'}
-                                                   }
-                                    }
-                          },
                'type': 'object',
+               'additionalProperties': False,
                'properties': {'post_id': {'type': 'number'},
                               'author_id': {'type': 'number'},
-                              'post_value': {'type': 'string'}
+                              'post_value': {'type': 'string'},
+                              'author': {'additionalProperties': False,
+                                         'type': 'object',
+                                         'properties': {'author_name': {'type': 'string'},
+                                                        'author_id': {'type': 'number'}
+                                                        }
+                                         }
                               }
            }
 
@@ -55,17 +56,19 @@ def test_sqlalchemy_recursive():
 def test_sqlalchemy_recursive_inverse():
     assert sqlalchemy.SqlAlchemyDriver().convert_entity_tree(Author) == \
            {
-               'posts': {'type': 'object',
-                         'items': {'type': 'object',
-                                   'properties': {'post_id': {'type': 'number'},
-                                                  'author_id': {'type': 'number'},
-                                                  'post_value': {'type': 'string'}
-                                                  }
-                                   }
-                         },
-               'type': 'object',
-               'properties': {'author_name': {'type': 'string'},
-                              'author_id': {'type': 'number'}
 
+               'type': 'object',
+               'additionalProperties': False,
+               'properties': {'author_name': {'type': 'string'},
+                              'author_id': {'type': 'number'},
+                              'posts': {'type': 'array',
+                                        'items': {'additionalProperties': False,
+                                                  'type': 'object',
+                                                  'properties': {'post_id': {'type': 'number'},
+                                                                 'author_id': {'type': 'number'},
+                                                                 'post_value': {'type': 'string'}
+                                                                 }
+                                                  }
+                                        },
                               }
            }
