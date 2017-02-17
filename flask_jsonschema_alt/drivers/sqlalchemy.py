@@ -24,15 +24,15 @@ class SqlAlchemyDriver(BaseDriver):
             if relationship.mapper in self._history:
                 # Don't go over any entities twice
                 continue
-            if relationship.direction == symbol('MANTTOONE'):
-                schema[relationship.back_populates] = {'type': 'array', 'items': self.convert_entity_tree(relationship.mapper, tree + [])}
+            if relationship.direction == symbol('MANYTOONE'):
+                schema['properties'][relationship.key] = self.convert_entity_tree(relationship.mapper)
             else:
-                schema[relationship.key] = {'type': 'object', 'items': self.convert_entity_tree(relationship.mapper)}
+                schema['properties'][relationship.key] = {'type': 'array', 'items': self.convert_entity_tree(relationship.mapper, tree + [])}
 
         return schema
 
     def convert_entity(self, entity: DeclarativeMeta):
-        schema = {'type': 'object', 'properties': {}}
+        schema = {'type': 'object', 'properties': {}, 'additionalProperties': False}
         inspection = inspect(entity)
         for field in inspection.columns:
             schema['properties'][field.name] = self.convert_field(field)
