@@ -1,5 +1,3 @@
-import sqlite3
-
 from flask import Flask, g
 
 from flask_jsonschema_alt import FlaskJsonSchemaAlt, schema_json

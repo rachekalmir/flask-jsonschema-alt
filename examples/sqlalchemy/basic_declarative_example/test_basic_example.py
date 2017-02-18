@@ -1,7 +1,6 @@
-import os
-from . import basic_example
 import unittest
-import tempfile
+
+from . import basic_example
 
 
 class BasicTestCase(unittest.TestCase):
@@ -23,7 +22,7 @@ class BasicTestCase(unittest.TestCase):
 
     def test_author(self):
         rv = self.app.post('/author', data='{"author_name": "John Doe", "posts": [{"post_value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },'
-                                     ' {"post_value": "Test Post"}]}',
+                                           ' {"post_value": "Test Post"}]}',
                            content_type='application/json')
         assert b'' in rv.data and rv.status_code == 200
 
