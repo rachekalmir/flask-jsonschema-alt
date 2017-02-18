@@ -21,6 +21,10 @@ class SqlAlchemyDriver(BaseDriver):
         inspection = inspect(entity)
         self._history.append(inspection.mapper)
         for relationship in inspection.relationships:
+            if hasattr(inspection.class_, '__jsonschema_include__') and not relationship.key in inspection.class_.__jsonschema_include__:
+                continue
+            if hasattr(inspection.class_, '__jsonschema_exclude__') and relationship.key in inspection.class_.__jsonschema_exclude__:
+                continue
             if relationship.mapper in self._history:
                 # Don't go over any entities twice
                 continue
@@ -35,6 +39,10 @@ class SqlAlchemyDriver(BaseDriver):
         schema = {'type': 'object', 'properties': {}, 'additionalProperties': False}
         inspection = inspect(entity)
         for field in inspection.columns:
+            if hasattr(inspection.class_, '__jsonschema_include__') and not field.name in inspection.class_.__jsonschema_include__:
+                continue
+            if hasattr(inspection.class_, '__jsonschema_exclude__') and field.name in inspection.class_.__jsonschema_exclude__:
+                continue
             schema['properties'][field.name] = self.convert_field(field)
         return schema
 
