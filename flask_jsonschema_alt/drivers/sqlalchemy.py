@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Boolean, String, Integer
+from sqlalchemy import Column, Boolean, String, Integer, DateTime, BigInteger
+from sqlalchemy import Date
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.inspection import inspect
 from sqlalchemy.util import symbol
@@ -6,9 +7,12 @@ from sqlalchemy.util import symbol
 from .base_driver import BaseDriver
 
 field_types = {
-    Integer: 'number',
-    String: 'string',
-    Boolean: 'boolean',
+    Integer: {'type': 'number'},
+    BigInteger: {'type': 'number'},
+    String: {'type': 'string'},
+    Boolean: {'type': 'boolean'},
+    Date: {'type': 'string', "format": "date"},
+    DateTime: {'type': 'string', "format": "date-time"},
 }
 
 
@@ -47,4 +51,4 @@ class SqlAlchemyDriver(BaseDriver):
         return schema
 
     def convert_field(self, field: Column):
-        return {'type': field_types[type(field.type)]}
+        return field_types[type(field.type)]
