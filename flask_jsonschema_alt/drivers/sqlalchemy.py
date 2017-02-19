@@ -1,5 +1,4 @@
-from sqlalchemy import Column, Boolean, String, Integer, DateTime, BigInteger
-from sqlalchemy import Date
+from sqlalchemy import Column, Boolean, String, Integer, DateTime, BigInteger, Date
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.inspection import inspect
 from sqlalchemy.util import symbol
@@ -25,7 +24,7 @@ class SqlAlchemyDriver(BaseDriver):
         inspection = inspect(entity)
         self._history.append(inspection.mapper)
         for relationship in inspection.relationships:
-            if hasattr(inspection.class_, '__jsonschema_include__') and not relationship.key in inspection.class_.__jsonschema_include__:
+            if hasattr(inspection.class_, '__jsonschema_include__') and relationship.key not in inspection.class_.__jsonschema_include__:
                 continue
             if hasattr(inspection.class_, '__jsonschema_exclude__') and relationship.key in inspection.class_.__jsonschema_exclude__:
                 continue
@@ -43,7 +42,7 @@ class SqlAlchemyDriver(BaseDriver):
         schema = {'type': 'object', 'properties': {}, 'additionalProperties': False}
         inspection = inspect(entity)
         for field in inspection.columns:
-            if hasattr(inspection.class_, '__jsonschema_include__') and not field.name in inspection.class_.__jsonschema_include__:
+            if hasattr(inspection.class_, '__jsonschema_include__') and field.name not in inspection.class_.__jsonschema_include__:
                 continue
             if hasattr(inspection.class_, '__jsonschema_exclude__') and field.name in inspection.class_.__jsonschema_exclude__:
                 continue
