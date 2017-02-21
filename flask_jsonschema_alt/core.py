@@ -10,11 +10,11 @@ from .drivers.base_driver import BaseDriver
 _fja = LocalProxy(lambda: current_app.extensions['flask_jsonschema_alt'])
 
 
-def schema_json(database_entity):
+def schema_json(database_entity, parse_tree=None):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            validate(request.get_json(), _fja.driver().convert_entity_tree(database_entity))
+            validate(request.get_json(), _fja.driver().convert_entity_tree(database_entity, parse_tree=parse_tree))
             return func(*args, **kwargs)
 
         return wrapper
