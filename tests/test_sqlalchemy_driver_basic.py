@@ -3,7 +3,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
-from flask_jsonschema_alt.drivers import sqlalchemy
+from flask_jsonschema_ext.drivers import sqlalchemy
 
 Base = declarative_base()
 

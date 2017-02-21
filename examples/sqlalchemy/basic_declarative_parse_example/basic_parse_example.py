@@ -1,7 +1,7 @@
 from flask import Flask, g
 
-from flask_jsonschema_alt import FlaskJsonSchemaAlt, schema_json
-from flask_jsonschema_alt.drivers import SqlAlchemyDriver
+from flask_jsonschema_ext import FlaskJsonSchemaAlt, schema_json
+from flask_jsonschema_ext.drivers import SqlAlchemyDriver
 
 from .models import Base, Post, Author, Session, create_engine
 

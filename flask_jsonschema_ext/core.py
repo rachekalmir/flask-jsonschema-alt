@@ -7,7 +7,7 @@ from werkzeug.local import LocalProxy
 
 from .drivers.base_driver import BaseDriver
 
-_fja = LocalProxy(lambda: current_app.extensions['flask_jsonschema_alt'])
+_fja = LocalProxy(lambda: current_app.extensions['flask_jsonschema_ext'])
 
 
 def schema_json(database_entity, parse_tree=None):
@@ -44,5 +44,5 @@ class FlaskJsonSchemaAlt(object):
 
     def init_app(self, app, driver, **kwargs):
         state = _get_state(app, driver, **kwargs)
-        app.extensions['flask_jsonschema_alt'] = state
+        app.extensions['flask_jsonschema_ext'] = state
         return state
