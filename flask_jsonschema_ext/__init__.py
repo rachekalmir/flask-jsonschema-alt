@@ -1,1 +1,1 @@
-from .core import schema_json, FlaskJsonSchemaAlt
+from .core import schema_json, FlaskJsonSchemaExt, __version__

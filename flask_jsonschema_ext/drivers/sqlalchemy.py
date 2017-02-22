@@ -24,11 +24,13 @@ class SqlAlchemyDriver(BaseDriver):
         inspection = inspect(entity)
         self._history.append(inspection.mapper)
         for relationship in inspection.relationships:
-            if hasattr(inspection.class_, '__jsonschema_include__') and relationship.key not in inspection.class_.__jsonschema_include__ \
-                    or parse_tree is not None and hasattr(parse_tree, '__jsonschema_include__') and relationship.key not in parse_tree.__jsonschema_include__:
+            if parse_tree is not None and hasattr(parse_tree, '__jsonschema_include__') and relationship.key not in parse_tree.__jsonschema_include__:
                 continue
-            elif hasattr(inspection.class_, '__jsonschema_exclude__') and relationship.key in inspection.class_.__jsonschema_exclude__ \
-                    or parse_tree is not None and hasattr(parse_tree, '__jsonschema_exclude__') and relationship.key not in parse_tree.__jsonschema_exclude__:
+            elif parse_tree is not None and hasattr(parse_tree, '__jsonschema_exclude__') and relationship.key in parse_tree.__jsonschema_exclude__:
+                continue
+            elif hasattr(inspection.class_, '__jsonschema_include__') and relationship.key not in inspection.class_.__jsonschema_include__:
+                continue
+            elif hasattr(inspection.class_, '__jsonschema_exclude__') and relationship.key in inspection.class_.__jsonschema_exclude__:
                 continue
             elif relationship.mapper in self._history:
                 # Don't go over any entities twice
