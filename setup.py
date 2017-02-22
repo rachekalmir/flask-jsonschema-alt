@@ -3,7 +3,7 @@
 
 """
 
-from distutils.core import setup
+from setuptools import setup
 
 from flask_jsonschema_ext import __version__
 
