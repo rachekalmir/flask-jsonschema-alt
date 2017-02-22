@@ -1,6 +1,6 @@
 from flask import Flask, g
 
-from flask_jsonschema_ext import FlaskJsonSchemaAlt, schema_json
+from flask_jsonschema_ext import FlaskJsonSchemaExt, schema_json
 from flask_jsonschema_ext.drivers import SqlAlchemyDriver
 
 from .models import Base, Post, Author, Session, create_engine
@@ -12,7 +12,7 @@ app.config.update(dict(
     USERNAME='admin',
     PASSWORD='default'
 ))
-jsonschema = FlaskJsonSchemaAlt(app, SqlAlchemyDriver)
+jsonschema = FlaskJsonSchemaExt(app, SqlAlchemyDriver)
 
 
 @app.route('/post', methods=['POST', 'PUT'])
