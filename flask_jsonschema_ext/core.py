@@ -7,16 +7,20 @@ from werkzeug.local import LocalProxy
 
 from .drivers.base_driver import BaseDriver
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 _fja = LocalProxy(lambda: current_app.extensions['flask_jsonschema_ext'])
 
 
-def schema_json(database_entity, parse_tree=None):
+def schema_json(database_entity, parse_tree=None, cache=True):
     def decorator(func):
+        schema = None
+        if cache:
+            schema = _fja.driver().convert_entity_tree(database_entity, parse_tree=parse_tree)
+
         @wraps(func)
         def wrapper(*args, **kwargs):
-            validate(request.get_json(), _fja.driver().convert_entity_tree(database_entity, parse_tree=parse_tree))
+            validate(request.get_json(), schema if schema is not None else _fja.driver().convert_entity_tree(database_entity, parse_tree=parse_tree))
             return func(*args, **kwargs)
 
         return wrapper
