@@ -98,3 +98,12 @@ This will override the definition as specified on the class itself as the schema
 ## Development
 
 We would love to hear what you think about flask-jsonschema-ext on our [issues](https://github.com/rachekalmir/flask-jsonschema-ext/issues) page.
+
+## Changelog
+
+#### Version 0.11
+
+Released on 
+
+- Created CHANGELOG
+- Added caching options to decorator

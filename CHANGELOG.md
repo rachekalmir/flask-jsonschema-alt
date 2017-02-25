@@ -1,7 +1,8 @@
-Version 0.11
-------------
+## Changelog
 
-Released on
+#### Version 0.11
+
+Released on 
 
 - Created CHANGELOG
 - Added caching options to decorator
