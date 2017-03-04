@@ -13,6 +13,8 @@ Use pip or easy_install:
 
 `pip install flask-jsonschema-ext`
 
+Flask-JSONSchema-Ext follows [semantic versioning](http://semver.org/).
+
 ## Testing
 
 The tests are in the tests/ and examples/ folders.
@@ -101,7 +103,7 @@ We would love to hear what you think about flask-jsonschema-ext on our [issues](
 
 ## Changelog
 
-#### Version 0.11
+#### Version 0.1.1
 
 Released on 2017-03-04
 

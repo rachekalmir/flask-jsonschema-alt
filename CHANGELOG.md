@@ -1,6 +1,6 @@
 ## Changelog
 
-#### Version 0.11
+#### Version 0.1.1
 
 Released on 2017-03-04
 
