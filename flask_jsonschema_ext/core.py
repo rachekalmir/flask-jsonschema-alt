@@ -1,3 +1,4 @@
+from functools import partial
 from functools import wraps
 
 from flask import current_app
@@ -12,19 +13,26 @@ __version__ = '0.1.1'
 _fja = LocalProxy(lambda: current_app.extensions['flask_jsonschema_ext'])
 
 
-def schema_json(database_entity, parse_tree=None, cache=True):
-    def decorator(func):
-        schema = None
-        if cache:
-            schema = _fja.driver().convert_entity_tree(database_entity, parse_tree=parse_tree)
-
+def schema_json(database_entity, parse_tree=None, cached=True):
+    def decorator(func, cache=None):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            validate(request.get_json(), schema if schema is not None else _fja.driver().convert_entity_tree(database_entity, parse_tree=parse_tree))
+            if cached and cache is not None:
+                try:
+                    schema = cache['schema']
+                except KeyError:
+                    schema = _fja.driver().convert_entity_tree(database_entity, parse_tree=parse_tree)
+                    cache['schema'] = schema
+            else:
+                schema = _fja.driver().convert_entity_tree(database_entity, parse_tree=parse_tree)
+
+            validate(request.get_json(), schema)
             return func(*args, **kwargs)
 
         return wrapper
 
+    if cached is True:
+        return partial(decorator, cache={})
     return decorator
 
 

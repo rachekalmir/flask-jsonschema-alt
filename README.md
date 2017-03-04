@@ -103,7 +103,7 @@ We would love to hear what you think about flask-jsonschema-ext on our [issues](
 
 #### Version 0.11
 
-Released on 
+Released on 2017-03-04
 
 - Created CHANGELOG
 - Added caching options to decorator
