@@ -16,7 +16,7 @@ field_types = {
 
 
 class SqlAlchemyDriver(BaseDriver):
-    def convert_entity_tree(self, entity: DeclarativeMeta, tree=None, parse_tree=None):
+    def convert_entity_tree(self, entity, tree=None, parse_tree=None):
         if tree is None:
             tree = []
 
@@ -47,7 +47,7 @@ class SqlAlchemyDriver(BaseDriver):
 
         return schema
 
-    def convert_entity(self, entity: DeclarativeMeta, parse_tree=None):
+    def convert_entity(self, entity, parse_tree=None):
         schema = {'type': 'object', 'properties': {}, 'additionalProperties': False}
         inspection = inspect(entity)
         for field in inspection.columns:
@@ -60,5 +60,5 @@ class SqlAlchemyDriver(BaseDriver):
             schema['properties'][field.name] = self.convert_field(field)
         return schema
 
-    def convert_field(self, field: Column):
+    def convert_field(self, field):
         return field_types[type(field.type)]

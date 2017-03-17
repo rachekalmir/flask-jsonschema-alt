@@ -8,7 +8,7 @@ from werkzeug.local import LocalProxy
 
 from .drivers.base_driver import BaseDriver
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 _fja = LocalProxy(lambda: current_app.extensions['flask_jsonschema_ext'])
 
@@ -52,7 +52,7 @@ class _State(object):
 
 
 class FlaskJsonSchemaExt(object):
-    def __init__(self, app=None, driver: BaseDriver = None, **kwargs):
+    def __init__(self, app=None, driver=None, **kwargs):
         if app is not None:
             self._state = self.init_app(app, driver, **kwargs)
 
