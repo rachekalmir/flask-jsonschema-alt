@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Table, Integer, String, create_engine
+from sqlalchemy import Column, Integer, String
 from sqlalchemy import ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, sessionmaker
+from sqlalchemy.orm import relationship
 
 from flask_jsonschema_ext.drivers import sqlalchemy
 

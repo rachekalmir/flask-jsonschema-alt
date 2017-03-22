@@ -1,8 +1,7 @@
 from flask import Flask, g, request, jsonify
-from flask_jsonschema_ext import FlaskJsonSchemaExt, schema_json
+from flask_jsonschema_ext import FlaskJsonSchemaExt, generate_jsonschema
 from flask_jsonschema_ext.drivers import SqlAlchemyDriver
 
-import colander
 from colanderalchemy import SQLAlchemySchemaNode
 
 from .models import Base, Post, Author, Session, create_engine
@@ -20,7 +19,7 @@ row2dict = lambda r: {c.name: str(getattr(r, c.name)) for c in r.__table__.colum
 
 
 @app.route('/post', methods=['POST', 'PUT'])
-@schema_json(Post)
+@generate_jsonschema(Post)
 def post_root():
     session = get_db()
     schema = SQLAlchemySchemaNode(Post)
@@ -38,7 +37,7 @@ def get_post(post_id):
 
 
 @app.route('/author', methods=['POST', 'PUT'])
-@schema_json(Author)
+@generate_jsonschema(Author)
 def author_root():
     session = get_db()
     schema = SQLAlchemySchemaNode(Author)
