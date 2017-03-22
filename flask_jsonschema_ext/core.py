@@ -6,26 +6,30 @@ from jsonschema import validate
 from flask import request
 from werkzeug.local import LocalProxy
 
-from .drivers.base_driver import BaseDriver
-
 __version__ = '0.1.2'
 
 _fja = LocalProxy(lambda: current_app.extensions['flask_jsonschema_ext'])
 
 
-def schema_json(database_entity, parse_tree=None, cached=True):
+def generate_jsonschema(database_entity, parse_tree=None):
+    return _fja.driver().convert_entity_tree(database_entity, parse_tree=parse_tree)
+
+
+def jsonschema(schema_generation_fn, cached=True):
     def decorator(func, cache=None):
         @wraps(func)
         def wrapper(*args, **kwargs):
+            # Get the schema from the cache or generate it
             if cached and cache is not None:
                 try:
                     schema = cache['schema']
                 except KeyError:
-                    schema = _fja.driver().convert_entity_tree(database_entity, parse_tree=parse_tree)
+                    schema = schema_generation_fn()
                     cache['schema'] = schema
             else:
-                schema = _fja.driver().convert_entity_tree(database_entity, parse_tree=parse_tree)
+                schema = schema_generation_fn()
 
+            # Validate the request as it comes in
             validate(request.get_json(), schema)
             return func(*args, **kwargs)
 
@@ -34,6 +38,16 @@ def schema_json(database_entity, parse_tree=None, cached=True):
     if cached is True:
         return partial(decorator, cache={})
     return decorator
+
+
+# Shorthand for jsonschema and generate_jsonschema
+def jsonschema_generate(database_entity, cached=True, parse_tree=None):
+    return jsonschema(partial(generate_jsonschema, database_entity, parse_tree=parse_tree), cached=cached)
+
+
+# Deprecated, here for backwards compatibility with 0.1.2
+# TODO: remove in 1.0.0
+schema_json = jsonschema_generate
 
 
 def _get_state(app, driver, **kwargs):
