@@ -48,7 +48,7 @@ Next create a basic Flask app and annotate the flask endpoint with the `@schema_
 
 from flask import Flask
 
-from flask_jsonschema_ext import FlaskJsonSchemaExt, schema_json
+from flask_jsonschema_ext import FlaskJsonSchemaExt, jsonschema_generate
 from flask_jsonschema_ext.drivers import SqlAlchemyDriver
 
 from .models import Post
@@ -57,7 +57,7 @@ app = Flask(__name__)
 jsonschema = FlaskJsonSchemaExt(app, SqlAlchemyDriver)
 
 @app.route('/post', methods=['POST', 'PUT'])
-@schema_json(Post)
+@jsonschema_generate(Post)
 def post_root():
     return ""
 
@@ -90,7 +90,7 @@ You can also customise the schema at a local level by specifying a custom parse 
 
 ```python
 @app.route('/post', methods=['POST', 'PUT'])
-@schema_json(Post, parse_tree={__jsonschema_include__: ['post_value', 'author_name']})
+@jsonschema_generate(Post, parse_tree={__jsonschema_include__: ['post_value', 'author_name']})
 def post_root():
     return ""
 ```
@@ -102,6 +102,14 @@ This will override the definition as specified on the class itself as the schema
 We would love to hear what you think about flask-jsonschema-ext on our [issues](https://github.com/rachekalmir/flask-jsonschema-ext/issues) page.
 
 ## Changelog
+
+#### Version 0.2.0
+
+Released on 
+
+- Migrated jsonschema decorator to support non-generated schemas
+- Added colanderalchemy example
+
 
 #### Version 0.1.1
 
