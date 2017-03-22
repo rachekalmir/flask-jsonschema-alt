@@ -41,7 +41,7 @@ class Post(Base):
     author_name = Column(String)
 ```
 
-Next create a basic Flask app and annotate the flask endpoint with the `@schema_json` decorator:
+Next create a basic Flask app and annotate the flask endpoint with the `@jsonschema_generate` decorator:
 
 ```python
 # app.py
