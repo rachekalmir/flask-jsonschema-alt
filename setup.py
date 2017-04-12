@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 """
+Flask JSONSchema Extended Library
 
+This library can be used to apply a JSONSchema (http://json-schema.org/) to a Flask API end-point that is generated on the fly from your database entities.
+
+Currently supported drivers are:
+
+* SQLAlchemy
 """
 
 from setuptools import setup
@@ -14,7 +20,7 @@ setup(name='Flask-JSONSchema-Ext',
       long_description=__doc__,
       author='rachekalmir',
       author_email='rachekalmir@users.noreply.github.com',
-      url='https://github.com/rachekalmir/flask_jsonschema_ext',
+      url='https://github.com/rachekalmir/flask-jsonschema-ext',
       packages=['flask_jsonschema_ext'],
       install_requires=['sqlalchemy>=1.0.0', 'flask>=0.11.0', 'jsonschema>=2.6.0'],
       tests_requires=['pytest>=3.0'],
