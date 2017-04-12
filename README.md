@@ -103,13 +103,13 @@ We would love to hear what you think about flask-jsonschema-ext on our [issues](
 
 ## Changelog
 
-#### Version 0.2.1
+#### Version 0.2.0
 
 Released on 
 
 - Added Local File Driver
 
-#### Version 0.2.0
+#### Version 0.1.2
 
 Released on 2017-04-12
 
