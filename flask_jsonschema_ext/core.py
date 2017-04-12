@@ -12,10 +12,13 @@ _fja = LocalProxy(lambda: current_app.extensions['flask_jsonschema_ext'])
 
 
 def generate_jsonschema(database_entity, parse_tree=None):
+    """Generate a JSONSchema from a database entity"""
     return _fja.driver().convert_entity_tree(database_entity, parse_tree=parse_tree)
 
 
 def jsonschema(schema_generation_fn, cached=True):
+    """Decorate a method to be protected by a jsonschema using the schema generation function specified"""
+
     def decorator(func, cache=None):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -40,8 +43,8 @@ def jsonschema(schema_generation_fn, cached=True):
     return decorator
 
 
-# Shorthand for jsonschema and generate_jsonschema
 def jsonschema_generate(database_entity, cached=True, parse_tree=None):
+    """Shorthand for protecting a method with jsonschema and using generate_jsonschema on a database entity"""
     return jsonschema(partial(generate_jsonschema, database_entity, parse_tree=parse_tree), cached=cached)
 
 
