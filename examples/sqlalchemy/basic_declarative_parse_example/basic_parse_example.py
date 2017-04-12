@@ -1,6 +1,6 @@
 from flask import Flask, g
 
-from flask_jsonschema_ext import FlaskJsonSchemaExt, generate_jsonschema
+from flask_jsonschema_ext import FlaskJsonSchemaExt, jsonschema_generate
 from flask_jsonschema_ext.drivers import SqlAlchemyDriver
 
 from .models import Base, Post, Author, Session, create_engine
@@ -16,13 +16,13 @@ jsonschema = FlaskJsonSchemaExt(app, SqlAlchemyDriver)
 
 
 @app.route('/post', methods=['POST', 'PUT'])
-@generate_jsonschema(Post, {'__jsonschema_exclude__': ['post_id']})
+@jsonschema_generate(Post, {'__jsonschema_exclude__': ['post_id']})
 def post_root():
     return ""
 
 
 @app.route('/author', methods=['POST', 'PUT'])
-@generate_jsonschema(Author, {'__jsonschema_include__': ['author_name'], 'posts': {'__jsonschema_include__': ['post_value']}})
+@jsonschema_generate(Author, {'__jsonschema_include__': ['author_name'], 'posts': {'__jsonschema_include__': ['post_value']}})
 def author_root():
     return ""
 

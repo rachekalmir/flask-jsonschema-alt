@@ -8,11 +8,8 @@ class BasicColanderTestCase(unittest.TestCase):
         basic_colander_example.app.config['DATABASE'] = 'sqlite:///:memory:'
         basic_colander_example.app.config['TESTING'] = True
         self.app = basic_colander_example.app.test_client()
-        # with basic_colander_example.app.app_context():
-        #     basic_colander_example.init_db()
 
     def tearDown(self):
-        # basic_declarative_example.close_db()
         pass
 
     def test_post(self):

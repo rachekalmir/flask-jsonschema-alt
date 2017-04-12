@@ -1,5 +1,5 @@
 from flask import Flask, g, request, jsonify
-from flask_jsonschema_ext import FlaskJsonSchemaExt, generate_jsonschema
+from flask_jsonschema_ext import FlaskJsonSchemaExt, jsonschema_generate
 from flask_jsonschema_ext.drivers import SqlAlchemyDriver
 
 from colanderalchemy import SQLAlchemySchemaNode
@@ -19,7 +19,7 @@ row2dict = lambda r: {c.name: str(getattr(r, c.name)) for c in r.__table__.colum
 
 
 @app.route('/post', methods=['POST', 'PUT'])
-@generate_jsonschema(Post)
+@jsonschema_generate(Post)
 def post_root():
     session = get_db()
     schema = SQLAlchemySchemaNode(Post)
@@ -37,7 +37,7 @@ def get_post(post_id):
 
 
 @app.route('/author', methods=['POST', 'PUT'])
-@generate_jsonschema(Author)
+@jsonschema_generate(Author)
 def author_root():
     session = get_db()
     schema = SQLAlchemySchemaNode(Author)
@@ -60,7 +60,7 @@ def init_db():
     return engine
 
 
-def connect_db(engine=None):
+def connect_db():
     """Connects to the specific database."""
     engine = init_db()
     Session.configure(bind=engine)
