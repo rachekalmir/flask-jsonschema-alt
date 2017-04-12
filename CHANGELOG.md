@@ -1,5 +1,11 @@
 ## Changelog
 
+#### Version 0.2.1
+
+Released on 
+
+- Added Local File Driver
+
 #### Version 0.2.0
 
 Released on 
