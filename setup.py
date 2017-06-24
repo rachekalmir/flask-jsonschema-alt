@@ -11,10 +11,8 @@ Currently supported drivers are:
 
 from setuptools import setup
 
-from flask_jsonschema_ext import __version__
-
 setup(name='Flask-JSONSchema-Ext',
-      version=__version__,
+      version='0.1.2',
       license='MIT',
       description='Flask JSONSchema Extended Library',
       long_description=__doc__,

@@ -6,8 +6,6 @@ from jsonschema import validate
 from flask import request
 from werkzeug.local import LocalProxy
 
-__version__ = '0.1.2'
-
 _fja = LocalProxy(lambda: current_app.extensions['flask_jsonschema_ext'])
 
 
