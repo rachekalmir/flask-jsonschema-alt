@@ -10,12 +10,8 @@ Currently supported drivers are:
 """
 
 from setuptools import setup
-from pip.req import parse_requirements
 
 from flask_jsonschema_ext import __version__
-
-install_requires = [str(ir.req) for ir in parse_requirements('requirements.txt')]
-test_requires = [str(ir.req) for ir in parse_requirements('test-requirements.txt')]
 
 setup(name='Flask-JSONSchema-Ext',
       version=__version__,
@@ -26,8 +22,8 @@ setup(name='Flask-JSONSchema-Ext',
       author_email='rachekalmir@users.noreply.github.com',
       url='https://github.com/rachekalmir/flask-jsonschema-ext',
       packages=['flask_jsonschema_ext'],
-      install_requires=install_requires,
-      tests_requires=test_requires,
+      install_requires=['sqlalchemy>=1.0.0', 'flask>=0.11.0', 'jsonschema>=2.6.0'],
+      tests_requires=['pytest>=2.5.2', 'pytest-cache>=1.0', 'pytest-cov>=1.6', 'pytest-flakes>=0.2', 'tox>=1.7.0'],
       classifiers=[
           'Development Status :: 4 - Beta',
           'Environment :: Web Environment',
