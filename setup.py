@@ -14,8 +14,8 @@ from pip.req import parse_requirements
 
 from flask_jsonschema_ext import __version__
 
-install_requires = parse_requirements('requirements.txt')
-test_requires = parse_requirements('test-requirements.txt')
+install_requires = [str(ir.req) for ir in parse_requirements('requirements.txt')]
+test_requires = [str(ir.req) for ir in parse_requirements('test-requirements.txt')]
 
 setup(name='Flask-JSONSchema-Ext',
       version=__version__,
