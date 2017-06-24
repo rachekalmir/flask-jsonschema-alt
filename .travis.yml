@@ -1,0 +1,18 @@
+language: python
+python:
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+install:
+  - travis_retry pip install -r requirements.txt -r test-requirements.txt -e .
+  - travis_retry pip install coverage coveralls
+
+script: py.test --cov flask_jsonschema_ext --cov-report term-missing
+
+after_script:
+  - coveralls
+
+branches:
+  only:
+    - master
