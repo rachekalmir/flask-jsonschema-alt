@@ -1,6 +1,8 @@
 # Flask-JSONSchema-Ext
 Flask JSONSchema Extended Library
 
+[![Build Status](https://travis-ci.org/rachekalmir/flask-jsonschema-ext.svg?branch=master)](https://travis-ci.org/rachekalmir/flask-jsonschema-ext) [![Coverage Status](https://coveralls.io/repos/github/rachekalmir/flask-jsonschema-ext/badge.svg?branch=master)](https://coveralls.io/github/rachekalmir/flask-jsonschema-ext?branch=master)
+
 This library can be used to apply a JSONSchema (http://json-schema.org/) to a Flask API end-point that is generated on the fly from your database entities.
 
 Currently supported drivers are:
