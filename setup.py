@@ -11,6 +11,12 @@ Currently supported drivers are:
 
 from setuptools import setup
 
+with open('requirements.txt') as f:
+    install_requires = f.read().splitlines()
+
+with open('test-requirements.txt') as f:
+    tests_requires = f.read().splitlines()
+
 setup(name='Flask-JSONSchema-Ext',
       version='0.1.2',
       license='MIT',
@@ -20,8 +26,8 @@ setup(name='Flask-JSONSchema-Ext',
       author_email='rachekalmir@users.noreply.github.com',
       url='https://github.com/rachekalmir/flask-jsonschema-ext',
       packages=['flask_jsonschema_ext'],
-      install_requires=['sqlalchemy>=1.0.0', 'flask>=0.11.0', 'jsonschema>=2.6.0'],
-      tests_requires=['pytest>=2.5.2', 'pytest-cache>=1.0', 'pytest-cov>=1.6', 'pytest-flakes>=0.2', 'tox>=1.7.0'],
+      install_requires=install_requires,
+      tests_requires=tests_requires,
       classifiers=[
           'Development Status :: 4 - Beta',
           'Environment :: Web Environment',
